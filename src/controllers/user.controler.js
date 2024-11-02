@@ -3,6 +3,7 @@ import {ApiError} from '../utils/ApiError.js'
 import {User} from '../models/user.model.js'
 import {uploadOnCloudinary} from "../utils/Cloudinary.js"
 import {ApiResponse} from '../utils/ApiResponse.js'
+<<<<<<< HEAD
 
 // Coocies option
 const options = {
@@ -23,6 +24,8 @@ const generateAccessAndReferenceTokens = async(userId)=>{
         throw new ApiError(500, "Something went wrong while generating referesh and access token")
     }
 }
+=======
+>>>>>>> 49ef271b4db1ed1a7206a364244b92323cd1eec2
 
 const registerUser = asyncHandler(async (req, res) => {
     // res.status(200).json({
@@ -39,7 +42,11 @@ const registerUser = asyncHandler(async (req, res) => {
     // return res
 
     const {fullName, email, userName, password} = req.body
+<<<<<<< HEAD
     // console.log("req.body->", req.body);
+=======
+    console.log("req.body->", req.body);
+>>>>>>> 49ef271b4db1ed1a7206a364244b92323cd1eec2
     
 
     if([fullName, email, userName, password].some((feild)=> feild?.trim() === "")){
@@ -49,16 +56,27 @@ const registerUser = asyncHandler(async (req, res) => {
     const existUser = await User.findOne({
         $or : [{userName}, {email}]
     })
+<<<<<<< HEAD
+=======
+    console.log(existUser);
+>>>>>>> 49ef271b4db1ed1a7206a364244b92323cd1eec2
     
 
     if(existUser){
         throw new ApiError(409,"User with email or username already exists");      
     }
 
+<<<<<<< HEAD
     // console.log("req file->",req.files);
     
     const avatarLocalPath =  req.files?.avatar[0]?.path;
     // console.log("avatar path ->",avatarLocalPath);
+=======
+    console.log(req.files);
+    
+    const avatarLocalPath =  req.files?.avatar[0]?.path;
+    console.log("avatar path ->",avatarLocalPath);
+>>>>>>> 49ef271b4db1ed1a7206a364244b92323cd1eec2
     // const coverImageLocalPath =  req.files?.coverImage[0]?.path;
     // console.log("cover path ->",coverImageLocalPath);
     
@@ -66,6 +84,7 @@ const registerUser = asyncHandler(async (req, res) => {
     if (req.files && Array.isArray(req.files.coverImage) && req.files.coverImage.length > 0) {
         coverImageLocalPath = req.files.coverImage[0].path
     }
+<<<<<<< HEAD
     // console.log("cover path ->",coverImageLocalPath);
 
     if(!avatarLocalPath){
@@ -79,6 +98,21 @@ const registerUser = asyncHandler(async (req, res) => {
 
     if(!avatar){
         throw new ApiError(400, "Avatar cloudinary files is required")
+=======
+    console.log("cover path ->",coverImageLocalPath);
+
+    if(!avatarLocalPath){
+        throw new ApiError(400, "Avatar files is required")
+    }
+
+    const avatar = await uploadOnCloudinary(avatarLocalPath)
+    console.log("avatar;->",avatar);
+    
+    // const coverImage = await uploadOnCloudinary(coverImageLocalPath)
+
+    if(!avatar){
+        throw new ApiError(400, "Avatar files is required")
+>>>>>>> 49ef271b4db1ed1a7206a364244b92323cd1eec2
     }
 
     const user = await User.create({
@@ -100,6 +134,7 @@ const registerUser = asyncHandler(async (req, res) => {
         new ApiResponse(200, createdUser, "User registerd Successfully")
     )
 
+<<<<<<< HEAD
 })
 
 const loginUser = asyncHandler(async(req,res)=>{
@@ -169,6 +204,8 @@ const logoutUser = asyncHandler(async(req,res)=>{
               .clearCookie("accessToken", options) 
               .clearCookie("refereshToken", options) 
               .json(new ApiResponse(200, null,"User logged Out"))
+=======
+>>>>>>> 49ef271b4db1ed1a7206a364244b92323cd1eec2
 })
 
 export {
