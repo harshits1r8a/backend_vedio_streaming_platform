@@ -16,10 +16,16 @@ app.use(cors({
     preflightContinue: false
 }))
 
+// used for take data from body/json
 app.use(express.json({limit:limit}))
+
+// used for take data from URL
 app.use(express.urlencoded({extended:true, limit:limit}))
-app.use(express.static("public"))//public means public file
+
+// used t set/acess/read the coocies of user's browser               
 app.use(cookieParser())
+
+app.use(express.static("public"))//public means public file
 
 // router import
 import userRouter from './routes/user.routes.js'
